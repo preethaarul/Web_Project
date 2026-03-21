@@ -28,8 +28,10 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="answer-item">
               <span>Option ${i}</span>
               <input type="text" name="question-${questionCounter}-answer-${i}" ${i <= 2 ? "required" : ""} autocomplete="off" value="${data.answers?.[i-1]?.text || ''}">
-              <label>Correct</label>
-              <input type="radio" name="question-${questionCounter}-correct" value="${i}" ${data.answers?.[i-1]?.correct ? "checked" : ""} ${i === 1 ? "required" : ""}>
+              <div class="correct-selection">
+                <label>Correct</label>
+                <input type="radio" name="question-${questionCounter}-correct" value="${i}" ${data.answers?.[i-1]?.correct ? "checked" : ""} ${i === 1 ? "required" : ""}>
+              </div>
             </div>
           `).join('')}
         </div>
