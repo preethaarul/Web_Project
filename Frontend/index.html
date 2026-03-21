@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Quiz Maker</title>
+    <h4> 24BCE1827 Preetha Arul</h4>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <header class="header">
+  <a href="index.html" class="logo">QuizHub</a>
+
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <nav class="navbar" id="navbar">
+    <nav class="navbar" id="navbar">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="TakeQuiz.html">Take Quiz</a>
+    <a href="CreateQuiz.html">Create Quiz</a>
+    <a href="login.html" id="nav-login">Login</a>
+    <a href="register.html" id="nav-register">Register</a>
+    <a href="#" id="nav-logout" style="display:none;">Logout</a>
+</nav>
+  </nav>
+</header>
+
+
+    <main class="main">
+        <section class="hero">
+            <h1>Welcome to QuizHub!</h1>
+            <p class="tagline">Test Your Wits. Beat the Clock. Become a Quiz Master!</p>
+
+            <div id="hero-buttons">
+                <button class="reg-btn" id="get-started-btn">Get Started</button>
+                <p class="login-link">Already registered? <a href="login.html">Login</a></p>
+            </div>
+        </section>
+
+        <section class="highlights">
+            <div class="card">
+                <h2>📚 Create Quizzes</h2>
+                <p>Design your own quizzes in minutes and share them with friends, classmates, or the world.</p>
+            </div>
+            <div class="card">
+                <h2>⚡ Take Quizzes</h2>
+                <p>Pick from a variety of quizzes and test your skills instantly with live feedback.</p>
+            </div>
+            <div class="card">
+                <h2>🎖️ Track Progress</h2>
+                <p>Earn scores, track your improvements, and become a quiz master step by step.</p>
+            </div>
+        </section>
+
+        <section class="steps">
+            <h2>How It Works 🚀</h2>
+            <div class="step-container">
+                <div class="step">
+                    <h3>1. Register</h3>
+                    <p>Sign up in seconds to unlock all features.</p>
+                </div>
+                <div class="step">
+                    <h3>2. Play & Create</h3>
+                    <p>Take quizzes or create your own with ease.</p>
+                </div>
+                <div class="step">
+                    <h3>3. Compete</h3>
+                    <p>Challenge friends, beat scores, and climb the leaderboard!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="boot.js"></script>
+    <script>
+    const heroButtons = document.getElementById('hero-buttons');
+    const navLogin = document.getElementById('nav-login');
+    const navRegister = document.getElementById('nav-register');
+    const navLogout = document.getElementById('nav-logout');
+    
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (user) {
+        if(navLogin) navLogin.style.display = 'none';
+        if(navRegister) navRegister.style.display = 'none';
+        if(navLogout) navLogout.style.display = 'inline-block';
+
+        navLogout.addEventListener('click', () => {
+            localStorage.removeItem('user');
+            location.reload(); 
+        });
+
+        heroButtons.innerHTML = `
+            <p class="stat-value">Logged in as ${user.fullname || user.email}</p>
+            <button id="continue-btn" class="reg-btn">View Dashboard</button>
+            <p class="login-link"><a href="#" id="logout-btn-hero">Logout</a></p>
+        `;
+
+        document.getElementById('continue-btn').addEventListener('click', () => {
+            window.location.href = 'dashboard.html';
+        });
+
+        document.getElementById('logout-btn-hero').addEventListener('click', () => {
+            localStorage.removeItem('user');
+            location.reload(); 
+        });
+
+    } else {
+        const getStartedBtn = document.getElementById('get-started-btn');
+        if (getStartedBtn) {
+            getStartedBtn.addEventListener('click', () => {
+                window.location.href = 'register.html';
+            });
+        }
+    }
+</script>
+
+<script src="toggle.js"></script>
+
+
+</body>
+</html>

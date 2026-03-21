@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a Quiz - QuizHub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+  <a href="index.html" class="logo">QuizHub</a>
+
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <nav class="navbar" id="navbar">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="TakeQuiz.html">Take Quiz</a>
+    <a href="CreateQuiz.html" class="active">Create Quiz</a>
+    <a href="#" id="logout-btn">Logout</a>
+  </nav>
+</header>
+
+
+    <main class="main createquizpage">
+        <div class="form-container">
+            <h2 id="form-heading">Create a New Quiz</h2>
+            <form id="quiz-form" autocomplete="off" >
+                <div class="form-group">
+                    <label for="quiz-title">Quiz Title</label>
+                    <input type="text" id="quiz-title" name="quiz-title" autocomplete="off" required >
+                </div>
+
+                <div class="form-group">
+                    <label for="quiz-description">Description</label>
+                    <textarea id="quiz-description" name="quiz-description" autocomplete="off"></textarea>
+                </div>
+
+                <div id="questions-container"></div>
+
+                <button type="button" id="add-question-btn" >Add Question</button>
+                
+                <div class="form-group">
+                    <label for="quiz-duration">Quiz Duration (minutes)</label>
+                    <input type="number" id="quiz-duration" min="1">
+                </div>
+
+                 <div class="form-actions">
+  <button type="button" id="discard-btn" class="btn discard-btn">Discard</button>
+  <button type="submit" class="btn save-btn">Save Quiz</button>
+</div>
+
+                
+            </form>
+        </div>
+    </main>
+
+    <script>
+        // Ensure user is logged in
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) {
+            alert('Please login first!');
+            window.location.href = 'login.html';
+        }
+
+    
+    </script>
+
+    <script src="create_quiz.js"></script>
+
+    <script src="toggle.js"></script>
+
+</body>
+</html>

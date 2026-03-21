@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard - QuizHub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ <header class="header">
+  <a href="index.html" class="logo">QuizHub</a>
+
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <nav class="navbar" id="navbar">
+    <a href="dashboard.html" class="active">Dashboard</a>
+    <a href="TakeQuiz.html">Take Quiz</a>
+    <a href="CreateQuiz.html">Create Quiz</a>
+    <a href="#" id="logout-btn">Logout</a>
+  </nav>
+</header>
+
+
+  <main class="main">
+    <section class="dashboard">
+      <h1 id="user-welcome">Welcome, User!</h1>
+      <p>Your QuizHub Activity At a Glance.</p>
+    </section>
+
+    <section class="dashboard-content">
+      <div class="stats-card">
+        <h2>📊 Your Stats</h2>
+        <div class="stat-item">
+          <span class="stat-label">Quizzes Completed:</span>
+          <span id="quizzes-completed" class="stat-value">0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Highest Score:</span>
+          <span id="highest-score" class="stat-value">0%</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Average Score:</span>
+          <span id="average-score" class="stat-value">0%</span>
+        </div>
+      </div>
+
+      <div class="recent-activity">
+        <h2>📝 Recent Quizzes</h2>
+        <ul id="quiz-list">
+          <li>No recent quizzes found.</li>
+        </ul>
+      </div>
+
+      <div class="created-quizzes">
+        <h2>📝 Quizzes Created</h2>
+        <ul id="created-quiz-list">
+          <li>No quizzes created yet.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <script>
+const BACKEND_URL = '';
+
+//login check
+const user = JSON.parse(localStorage.getItem('user'));
+if (!user) {
+  alert('Please login first!');
+  window.location.href = 'login.html';
+} else {
+  document.getElementById('user-welcome').innerText = `Welcome, ${user.fullname}!`;
+}
+
+// Logout 
+document.getElementById('logout-btn').addEventListener('click', () => {
+  localStorage.removeItem('user');
+  window.location.href = 'login.html';
+});
+
+
+async function fetchDashboardData() {
+  try {
+    const resultsRes = await fetch(`${BACKEND_URL}/api/results`);
+    const results = await resultsRes.json();
+
+    const quizzesCompletedElem = document.getElementById('quizzes-completed');
+    const highestScoreElem = document.getElementById('highest-score');
+    const averageScoreElem = document.getElementById('average-score');
+    const quizList = document.getElementById('quiz-list');
+
+    if (results.length > 0) {
+      quizzesCompletedElem.innerText = results.length;
+
+      const highest = results.reduce((prev, curr) => 
+        (curr.score / curr.total > prev.score / prev.total ? curr : prev),
+        results[0]
+      );
+      highestScoreElem.innerText = `${((highest.score / highest.total) * 100).toFixed(0)}%`;
+
+      const totalPercent = results.reduce((sum, r) => sum + (r.score / r.total) * 100, 0);
+      averageScoreElem.innerText = `${(totalPercent / results.length).toFixed(0)}%`;
+
+      quizList.innerHTML = '';
+      results.slice(-5).reverse().forEach(r => {
+        const li = document.createElement('li');
+        li.innerText = `${r.topic} - ${r.score}/${r.total}`;
+        quizList.appendChild(li);
+      });
+    }
+
+    // Fetch quiz
+    const createdRes = await fetch(`${BACKEND_URL}/api/quizzes`);
+    const allQuizzes = await createdRes.json();
+    const createdList = document.getElementById('created-quiz-list');
+
+    // Filter created 
+    const userCreatedQuizzes = allQuizzes.filter(q => q.createdBy === (user.id || user.email));
+
+    if (userCreatedQuizzes.length > 0) {
+      createdList.innerHTML = '';
+      userCreatedQuizzes.slice().reverse().forEach(quiz => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <strong>${quiz.title}</strong>
+          <button onclick="editQuiz('${quiz.id}')" class="quiz-action-btn">Edit</button>
+          <button onclick="shareQuiz('${quiz.id}')" class="quiz-action-btn">Share</button>
+        `;
+        createdList.appendChild(li);
+      });
+    } else {
+      createdList.innerHTML = '<li>No quizzes created yet.</li>';
+    }
+
+  } catch (err) {
+    console.error('Error fetching dashboard data:', err);
+    alert('Failed to load dashboard data. Please try again later.');
+  }
+}
+
+fetchDashboardData();
+
+function editQuiz(id) {
+  window.location.href = `CreateQuiz.html?quizId=${id}`;
+}
+
+function shareQuiz(id) {
+  navigator.clipboard.writeText(id)
+    .then(() => alert('Quiz ID copied to clipboard!'))
+    .catch(err => console.error('Failed to copy ID:', err));
+}
+</script>
+
+<script src="toggle.js"></script>
+ <script src="boot.js"></script>
+</body>
+</html>

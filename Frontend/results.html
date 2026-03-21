@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - QuizHub</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .question-block { 
+      margin-bottom: 20px; 
+      padding: 10px; 
+      border: 1px solid #ccc; 
+      border-radius: 8px;
+    }
+    .answer-item { 
+      display: flex; 
+      justify-content: space-between;
+      align-items: center; 
+      margin: 5px 0; 
+      padding: 5px; 
+      border-radius: 4px;
+    }
+    .answer-item.correct { background-color: #28a746cf; } /* green */
+    .answer-item.wrong { background-color: #ca0112b6; }   /* red */
+    #total-score { font-size: 1.5rem; margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+  <header class="header">
+  <a href="index.html" class="logo">QuizHub</a>
+
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  
+  <nav class="navbar" id="navbar">
+    <a href="index.html" >Home</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="TakeQuiz.html">Take Quiz</a>
+    <a href="CreateQuiz.html">Create Quiz</a>
+    <a href="#" id="logout-btn">Logout</a>
+  </nav>
+</header>
+
+
+  <main class="main">
+    <div class="results-container">
+      <h2>Quiz Results</h2>
+      <br>
+      <p id="total-score" ></p>
+      <div id="questions-container"></div>
+      <button onclick="window.location.href='dashboard.html'" class="reg-btn">Back to Dashboard</button>
+    </div>
+  </main>
+
+  <script>
+    const latestResult = JSON.parse(localStorage.getItem('latestResult'));
+
+    if (!latestResult) {
+      alert('No quiz result found!');
+      window.location.href = 'dashboard.html';
+    } else {
+      document.getElementById('total-score').innerText =
+        `Total Score: ${latestResult.score} / ${latestResult.total}`;
+
+      const container = document.getElementById('questions-container');
+      container.innerHTML = '';
+
+      latestResult.questions.forEach((q, idx) => {
+        const block = document.createElement('div');
+        block.classList.add('question-block');
+
+        // Score per qn
+        const userSelected = q.answers.find(a => a.selected);
+        const questionScore = userSelected && userSelected.correct ? 1 : 0;
+
+        let answersHTML = '';
+        q.answers.forEach(a => {
+          let classes = '';
+          let label = '';
+          if (a.correct) {
+            classes += ' correct';
+            label = 'Correct Answer';
+          }
+          if (a.selected && !a.correct) {
+            classes += ' wrong';
+            label = 'Your Answer';
+          }
+          answersHTML += `<div class="answer-item${classes}">
+                            <span>${a.text}</span>
+                            ${label ? `<span>${label}</span>` : ''}
+                          </div>`;
+        });
+
+        block.innerHTML = `
+          <h3>Q${idx + 1}: ${q.question}</h3>
+          <div class="answer-list">${answersHTML}</div>
+          <div style="text-align:right;font-weight:bold;margin-top:5px;">Score: ${questionScore}/1</div>
+        `;
+        container.appendChild(block);
+      });
+    }
+
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      localStorage.removeItem('user');
+      window.location.href = 'index.html';
+    });
+  </script>
+
+  <script src="toggle.js"></script>
+
+</body>
+</html>

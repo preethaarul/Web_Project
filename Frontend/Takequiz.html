@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Take Quiz - QuizHub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="header">
+    <a href="index.html" class="logo">QuizHub</a>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+    <nav class="navbar" id="navbar">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="TakeQuiz.html" class="active">Take Quiz</a>
+      <a href="CreateQuiz.html">Create Quiz</a>
+      <a href="#" id="logout-btn">Logout</a>
+    </nav>
+  </header>
+
+ 
+  <div class="main">
+<div class="quiz-list-container">
+  <h2>Available Quizzes</h2>
+  <input
+    type="text"
+    id="quiz-search-input"
+    placeholder="Search quizzes"
+    class="quiz-search"
+  />
+  <div id="default-quiz-cards" class="quiz-card-container">
+  </div>
+</div>
+
+    <div class="form-container" id="join-container">
+      <h2>Take a Quiz</h2>
+      <input type="text" id="quiz-id-input" placeholder="Enter Quiz ID">
+      <button id="join-quiz-btn" class="reg-btn">Start Quiz</button>
+    </div>
+
+    <div class="quiz-container" id="quiz-container" style="display:none;">
+      <h2 id="quiz-title"></h2>
+
+      <div class="quiz-timer">
+        Time left: <span id="timer">00:00</span>
+      </div>
+
+      <div id="question-container"></div>
+
+      <div class="quiz-nav">
+        <button id="prev-btn" onclick="prevQuestion()">Previous</button>
+        <button id="next-btn" onclick="nextQuestion()">Next</button>
+        <button id="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="toggle.js"></script>
+  <script src="take_quiz.js"></script>
+</body>
+</html>
