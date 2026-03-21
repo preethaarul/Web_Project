@@ -5,7 +5,7 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(express.static(path.join(process.cwd(), 'Frontend')));
+//app.use(express.static(path.join(process.cwd(), 'Frontend')));
 
 // In-memory storage
 let users = [];
@@ -190,12 +190,7 @@ app.get('/api/results', (req, res) => {
   res.json(results);
 });
 
-// ================= HOME ROUTE ONLY =================
 
-// ONLY handle root → allow all other HTML files to work
-app.get('/', (req, res) => {
-  res.sendFile(path.join(process.cwd(), 'Frontend', 'index.html'));
-});
 
 // Export for Vercel
 module.exports = app;
