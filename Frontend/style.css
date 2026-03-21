@@ -518,7 +518,9 @@ body {
 }
 
 .answer-item input[type="text"] {
-  flex-grow: 1;
+  flex: 1;
+  width: auto;
+  margin: 0;
 }
 
 .answer-item input[type="radio"] {
@@ -707,6 +709,10 @@ body {
 .quiz-nav button:hover {
   background: #01064679;
   transform: scale(1.05);
+}
+
+#next-btn, #submit-btn {
+  margin-left: auto;
 }
 
 .created-quizzes h2 {
