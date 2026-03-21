@@ -162,15 +162,15 @@ body {
 
 /* FORM*/
 .form-container {
-  background: rgba(1, 1, 57, 0.4);
-  backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.12); /* Brighter, lighter glass */
+  backdrop-filter: blur(20px);
   padding: 40px;
   border-radius: 20px;
   width: 90%;
   max-width: 450px; /* Optimal for Login/Register */
   text-align: center;
-  box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.25); /* More prominent border */
   margin: 20px auto;
   transition: transform 0.3s ease;
 }
@@ -303,14 +303,16 @@ body {
 }
 
 .card {
-  background: #bac9fada;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
   padding: 25px;
-  border-radius: 12px;
+  border-radius: 20px;
   flex: 1;
   min-width: 250px;
   text-align: center;
-  box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.3s ease;
 }
 
 .card:hover {
@@ -321,11 +323,11 @@ body {
 .card h2 {
   margin-bottom: 15px;
   font-size: 1.5rem;
-  color: #072791;
+  color: #fff; /* White text for better contrast on glass */
 }
 
 .card p {
-  color: #020264;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 /* STEPS */
@@ -349,13 +351,15 @@ body {
 }
 
 .step {
-  background: #bac9fada;
-  padding: 20px;
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  padding: 25px;
+  border-radius: 20px;
   flex: 1;
   min-width: 220px;
-  box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
 }
 
 .step:hover {
@@ -364,11 +368,11 @@ body {
 
 .step h3 {
   margin-bottom: 10px;
-  color: #072791;
+  color: #fff;
 }
 
 .step p {
-  color: #020264;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 /* DASHBOARD  */
@@ -397,12 +401,12 @@ body {
 .stats-card,
 .recent-activity,
 .created-quizzes {
-  background: rgba(1, 1, 57, 0.4);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(15px);
   padding: 30px;
   border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   flex: 1;
   min-width: 300px;
   transition: transform 0.3s ease;
@@ -429,16 +433,25 @@ body {
   color: #f4d03f;
 }
 
-.recent-activity li {
+.recent-activity li,
+#created-quiz-list li {
   padding: 15px;
-  margin-bottom: 10px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 5px;
-  transition: transform 0.2s ease;
+  margin-bottom: 12px;
+  background: rgba(255, 255, 255, 0.05); /* Very light glass */
+  backdrop-filter: blur(5px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.recent-activity li:hover {
-  transform: translateX(5px);
+.recent-activity li:hover,
+#created-quiz-list li:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateX(10px);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 /*  FORM ELEMENTS  */
@@ -539,16 +552,16 @@ body {
 
 
 .quiz-list-container {
-  background: rgba(1, 1, 57, 0.4);
-  backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
   padding: 50px 30px;
   border-radius: 20px;
   width: 95%;
   max-width: 1100px;
   margin: 40px auto;
   text-align: center;
-  box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .quiz-list-container h2 {
@@ -572,14 +585,15 @@ body {
 }
 
 .quiz-card {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
   padding: 30px;
   border-radius: 20px;
   width: 280px;
   text-align: center;
-  box-shadow: 0px 10px 25px rgba(0,0,0,0.1);
+  box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .quiz-card:hover {
@@ -588,13 +602,14 @@ body {
 }
 
 .quiz-card h3 {
-  color: #072791;
+  color: #fff;
   font-size: 1.3rem;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .quiz-card p {
-  color: #020264;
+  color: rgba(255, 255, 255, 0.85);
   font-size: 0.95rem;
   margin-bottom: 25px;
   line-height: 1.5;
@@ -619,15 +634,15 @@ body {
 }
 
 .quiz-container {
-  background: rgba(1, 1, 57, 0.4);
-  backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
   padding: 50px 35px;
-  border-radius: 20px;
+  border-radius: 25px;
   width: 95%;
   max-width: 950px;
   margin: 50px auto;
-  box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0px 20px 45px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .quiz-container h2 {
@@ -654,17 +669,21 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 15px;
-  background: rgba(255,255,255,0.9);
-  border-radius: 8px;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.08); /* Lighter version */
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
   cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
-  color: #072791;
+  transition: all 0.3s ease;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .quiz-options label:hover {
-  background: rgba(255,255,255,1);
-  transform: scale(1.02);
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateX(5px);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .quiz-options input[type="radio"] {
@@ -963,12 +982,15 @@ body {
   font-size: 1.2rem;
   font-weight: 600;
   color: #f4d03f; 
-  margin-bottom: 20px;
-  background: rgba(0, 0, 0, 0.3);
-  padding: 10px 20px;
-  border-radius: 8px;
+  margin-bottom: 25px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  padding: 10px 25px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   display: inline-block;
-  min-width: 120px;
+  min-width: 140px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .quiz-timer.warning {

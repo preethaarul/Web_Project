@@ -3,14 +3,16 @@ const path = require('path');
 
 const app = express();
 
+// Middleware
 app.use(express.json());
-app.use(express.static(path.join(process.cwd())));
+app.use(express.static(path.join(process.cwd(), 'Frontend')));
 
-
+// In-memory storage
 let users = [];
 let quizzes = [];
 let results = [];
 
+// Default quizzes
 let defaultQuizzes = [
   {
     id: 'default1',
@@ -64,62 +66,12 @@ let defaultQuizzes = [
       }
     ],
     createdBy: 'default'
-  },
-  {
-    id: 'default2',
-    title: 'Science Quiz',
-    description: 'Basic science questions!',
-    questions: [
-      {
-        question: 'The chemical symbol for water is?',
-        answers: [
-          { text: 'H2O', correct: true },
-          { text: 'O2', correct: false },
-          { text: 'CO2', correct: false },
-          { text: 'HO', correct: false }
-        ]
-      },
-      {
-        question: 'How many planets are in the solar system?',
-        answers: [
-          { text: '8', correct: true },
-          { text: '9', correct: false },
-          { text: '7', correct: false },
-          { text: '10', correct: false }
-        ]
-      },
-      {
-        question: 'Light travels at?',
-        answers: [
-          { text: '3x10^8 m/s', correct: true },
-          { text: '1x10^6 m/s', correct: false },
-          { text: '3x10^6 m/s', correct: false },
-          { text: '5x10^8 m/s', correct: false }
-        ]
-      },
-      {
-        question: 'Earth is a?',
-        answers: [
-          { text: 'Planet', correct: true },
-          { text: 'Star', correct: false },
-          { text: 'Moon', correct: false },
-          { text: 'Comet', correct: false }
-        ]
-      },
-      {
-        question: 'The force that keeps us on the ground?',
-        answers: [
-          { text: 'Gravity', correct: true },
-          { text: 'Magnetism', correct: false },
-          { text: 'Friction', correct: false },
-          { text: 'Electricity', correct: false }
-        ]
-      }
-    ],
-    createdBy: 'default'
   }
 ];
 
+// ================= AUTH ROUTES =================
+
+// Register
 app.post('/api/register', (req, res) => {
   const { email, password, fullname } = req.body;
 
@@ -135,10 +87,12 @@ app.post('/api/register', (req, res) => {
   res.json({ message: 'Registered successfully' });
 });
 
+// Login
 app.post('/api/login', (req, res) => {
   const { email, password } = req.body;
 
   const user = users.find(u => u.email === email);
+
   if (!user) {
     return res.status(400).json({ message: 'User not registered' });
   }
@@ -149,10 +103,13 @@ app.post('/api/login', (req, res) => {
 
   res.json({
     message: 'Login successful',
-    user: { email: user.email, fullname: user.fullname },
+    user: { email: user.email, fullname: user.fullname }
   });
 });
 
+// ================= QUIZ ROUTES =================
+
+// Create quiz
 app.post('/api/quizzes', (req, res) => {
   const { userId, title, description, questions, duration } = req.body;
 
@@ -173,6 +130,7 @@ app.post('/api/quizzes', (req, res) => {
   res.json({ message: 'Quiz created', quiz });
 });
 
+// Update quiz
 app.put('/api/quizzes/:id', (req, res) => {
   const { id } = req.params;
   const index = quizzes.findIndex(q => q.id === id);
@@ -189,10 +147,12 @@ app.put('/api/quizzes/:id', (req, res) => {
   res.json({ message: 'Quiz updated', quiz: quizzes[index] });
 });
 
+// Get all quizzes
 app.get('/api/quizzes', (req, res) => {
   res.json([...defaultQuizzes, ...quizzes]);
 });
 
+// Get quiz by ID
 app.get('/api/quizzes/:id', (req, res) => {
   const quiz = [...defaultQuizzes, ...quizzes].find(
     q => q.id === req.params.id
@@ -205,6 +165,9 @@ app.get('/api/quizzes/:id', (req, res) => {
   res.json(quiz);
 });
 
+// ================= RESULTS ROUTES =================
+
+// Save result
 app.post('/api/results', (req, res) => {
   const { topic, score, total, date } = req.body;
 
@@ -222,14 +185,17 @@ app.post('/api/results', (req, res) => {
   res.json({ message: 'Result saved' });
 });
 
+// Get all results
 app.get('/api/results', (req, res) => {
   res.json(results);
 });
 
+// ================= HOME ROUTE ONLY =================
 
-
+// ONLY handle root → allow all other HTML files to work
 app.get('/', (req, res) => {
-  res.sendFile(path.join(process.cwd(), 'index.html'));
+  res.sendFile(path.join(process.cwd(), 'Frontend', 'index.html'));
 });
 
+// Export for Vercel
 module.exports = app;
