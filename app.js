@@ -4,7 +4,7 @@ const path = require('path');
 const app = express();
 
 app.use(express.json());
-app.use(express.static(path.join(process.cwd(), 'Frontend')));
+app.use(express.static(path.join(process.cwd())));
 
 
 let users = [];
@@ -229,7 +229,7 @@ app.get('/api/results', (req, res) => {
 
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(process.cwd(), 'Frontend', 'index.html'));
+  res.sendFile(path.join(process.cwd(), 'index.html'));
 });
 
 module.exports = app;
