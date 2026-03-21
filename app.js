@@ -4,7 +4,7 @@ const path = require('path');
 const app = express();
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'Frontend')));
+app.use(express.static(path.join(process.cwd(), 'Frontend')));
 
 
 let users = [];
@@ -228,8 +228,8 @@ app.get('/api/results', (req, res) => {
 
 
 
-app.get(/.*/, (req, res) => {
-  res.sendFile(path.join(__dirname, 'Frontend', 'index.html'));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(process.cwd(), 'Frontend', 'index.html'));
 });
 
 module.exports = app;
