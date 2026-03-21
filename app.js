@@ -6,7 +6,6 @@ const app = express();
 app.use(express.json());
 app.use(express.static(path.join(process.cwd(), 'Frontend')));
 
-const bootId = Date.now().toString();
 
 let users = [];
 let quizzes = [];
@@ -133,7 +132,7 @@ app.post('/api/register', (req, res) => {
   }
 
   users.push({ email, password, fullname });
-  res.json({ message: 'Registered successfully', bootId });
+  res.json({ message: 'Registered successfully' });
 });
 
 app.post('/api/login', (req, res) => {
@@ -151,7 +150,6 @@ app.post('/api/login', (req, res) => {
   res.json({
     message: 'Login successful',
     user: { email: user.email, fullname: user.fullname },
-    bootId
   });
 });
 
@@ -228,9 +226,7 @@ app.get('/api/results', (req, res) => {
   res.json(results);
 });
 
-app.get('/api/boot', (req, res) => {
-  res.json({ bootId });
-});
+
 
 app.get(/.*/, (req, res) => {
   res.sendFile(path.join(process.cwd(), 'Frontend', 'index.html'));
