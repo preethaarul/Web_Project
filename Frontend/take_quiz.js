@@ -110,24 +110,70 @@ function startQuiz(id) {
 
 function startTimer() {
   const timerElement = document.getElementById('timer');
-  if (!timerElement) return;
+  const canvas = document.getElementById('timer-canvas');
+  if (!timerElement || !canvas) return;
+  const ctx = canvas.getContext('2d');
+  const radius = 55;
+  const centerX = canvas.width / 2;
+  const centerY = canvas.height / 2;
+
   clearInterval(timerInterval);
   timerInterval = setInterval(() => {
     let minutes = Math.floor(timeRemaining / 60);
     let seconds = timeRemaining % 60;
-    timerElement.textContent = `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+    timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
-    if (timeRemaining <= 60) timerElement.style.color = '#ca0112';
+    // Draw the circular timer
+    drawCanvasClock(ctx, centerX, centerY, radius, timeRemaining / quizDuration);
+
+    if (timeRemaining <= 60) {
+      timerElement.style.color = '#ff4b5c';
+    } else {
+      timerElement.style.color = '#fff';
+    }
 
     if (timeRemaining <= 0) {
       clearInterval(timerInterval);
       alert("Time's up! Submitting your quiz.");
       submitQuiz();
     }
-
-    if (timeRemaining <= 60) timerElement.style.color = '#ca0112';
     timeRemaining--;
   }, 1000);
+}
+
+function drawCanvasClock(ctx, x, y, r, ratio) {
+  ctx.clearRect(0, 0, x * 2, y * 2);
+
+  // Background Ring
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, 2 * Math.PI);
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+  ctx.lineWidth = 10;
+  ctx.stroke();
+
+  // Progress Ring
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, 2 * Math.PI * ratio);
+  let color = '#8183ff';
+  if (ratio < 0.2) color = '#ff4b5c';
+  else if (ratio < 0.5) color = '#ffd000';
+
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 10;
+  ctx.lineCap = 'round';
+  ctx.shadowBlur = 10;
+  ctx.shadowColor = color;
+  ctx.stroke();
+  ctx.shadowBlur = 0; // Reset for other drawings
+
+  // Pulse effect if low time
+  if (ratio < 0.1 && Math.floor(Date.now() / 500) % 2 === 0) {
+    ctx.beginPath();
+    ctx.arc(x, y, r + 5, 0, 2 * Math.PI);
+    ctx.strokeStyle = 'rgba(255, 75, 92, 0.3)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
 }
 
 //join qz

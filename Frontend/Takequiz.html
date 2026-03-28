@@ -41,8 +41,11 @@
     <div class="quiz-container" id="quiz-container" style="display:none;">
       <h2 id="quiz-title"></h2>
 
-      <div class="quiz-timer">
-        Time left: <span id="timer">00:00</span>
+      <div class="quiz-timer-container">
+        <canvas id="timer-canvas" width="120" height="120"></canvas>
+        <div class="timer-text">
+          <span id="timer">00:00</span>
+        </div>
       </div>
 
       <div id="question-container"></div>

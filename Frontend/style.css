@@ -598,6 +598,38 @@ body {
   filter: brightness(1.1);
 }
 
+/* QUIZ TIMER (Circular) */
+.quiz-timer-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#timer-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: rotate(-90deg); /* Start clockwise from top */
+}
+
+.timer-text {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+#timer {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  display: block;
+}
+
 .quiz-container {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
