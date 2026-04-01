@@ -1,5 +1,8 @@
 QuizHub – Online Quiz Platform
+
 Live: https://quiz-hub-qh.vercel.app/ 
+
+
 QuizHub is a full-stack web application that allows users to create, take, and share quizzes easily.
 This project demonstrates a clean frontend-backend structure with a simple user authentication flow.
 
